@@ -2,11 +2,11 @@
     <flux:main>
         <div class="mb-6 flex items-center justify-between">
             <div>
-                <flux:heading size="xl">Os meus exames</flux:heading>
-                <flux:text class="mt-1 text-zinc-500">Todos os exames que criaste.</flux:text>
+                <flux:heading size="xl">My exams</flux:heading>
+                <flux:text class="mt-1 text-zinc-500">All the exams you created.</flux:text>
             </div>
             <flux:button href="{{ route('exams.create') }}" variant="primary" wire:navigate>
-                + Novo exame
+                + New Exam
             </flux:button>
         </div>
 
@@ -22,10 +22,10 @@
             @if($exams->isEmpty())
                 <div class="px-5 py-16 text-center">
                     <flux:icon name="document-text" class="w-12 h-12 text-zinc-300 mx-auto mb-4" />
-                    <flux:text class="text-zinc-400">Ainda não criaste nenhum exame.</flux:text>
+                    <flux:text class="text-zinc-400">You haven't created any exams yet.</flux:text>
                     <div class="mt-4">
                         <flux:button href="{{ route('exams.create') }}" variant="primary" wire:navigate>
-                            Criar primeiro exame
+                            Create first exam
                         </flux:button>
                     </div>
                 </div>
@@ -44,20 +44,20 @@
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
-                                    {{ $exam->sections()->count() }} sessões
+                                    {{ $exam->sections()->count() }} sessions
                                 </span>
                                 <flux:button href="{{ route('exams.show', $exam) }}" size="sm" wire:navigate>
-                                    Ver
+                                    See
                                 </flux:button>
                                 <flux:button href="{{ route('exams.edit', $exam) }}" size="sm" variant="ghost" wire:navigate>
-                                    Editar
+                                    Edit
                                 </flux:button>
                                 <form method="POST" action="{{ route('exams.destroy', $exam) }}">
                                     @csrf
                                     @method('DELETE')
                                     <flux:button type="submit" size="sm" variant="danger"
-                                        onclick="return confirm('Tens a certeza que queres eliminar este exame?')">
-                                        Eliminar
+                                        onclick="return confirm('Are you sure you want to delete this exam?')">
+                                        Delete
                                     </flux:button>
                                 </form>
                             </div>

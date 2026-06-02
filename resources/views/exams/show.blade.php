@@ -13,11 +13,11 @@
             <div class="flex gap-2">
                 <flux:button href="{{ route('exams.download.exam', $exam) }}" variant="primary" size="sm">
                     <flux:icon name="arrow-down-tray" class="w-4 h-4 mr-1" />
-                    Exame PDF
+                    Exam PDF
                 </flux:button>
                 <flux:button href="{{ route('exams.download.correction', $exam) }}" variant="ghost" size="sm">
                     <flux:icon name="arrow-down-tray" class="w-4 h-4 mr-1" />
-                    Guia de correção
+                    Correction guide
                 </flux:button>
                 <flux:button href="{{ route('exams.edit', $exam) }}" variant="ghost" size="sm" wire:navigate>
                     <flux:icon name="pencil" class="w-4 h-4" />
@@ -49,14 +49,14 @@
                             class="flex items-center justify-between px-5 py-3 bg-blue-50 dark:bg-blue-900 border-b border-blue-100 dark:border-blue-800">
                             <div class="flex items-center gap-3">
                                 <span class="text-sm font-semibold text-blue-700 dark:text-blue-300">
-                                    Secção {{ $index + 1 }}
+                                    Session {{ $index + 1 }}
                                     @if ($section->name)
                                         — {{ $section->name }}
                                     @endif
                                 </span>
                                 <span
                                     class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-800 dark:text-blue-200">
-                                    {{ $section->questions->count() }} questões
+                                    {{ $section->questions->count() }} questions
                                 </span>
                             </div>
                             <form method="POST" action="{{ route('sections.destroy', $section) }}">
@@ -64,7 +64,7 @@
                                 @method('DELETE')
                                 <flux:button type="submit" size="xs" variant="danger"
                                     onclick="return confirm('Eliminar esta sessão?')">
-                                    Eliminar
+                                    Delete
                                 </flux:button>
                             </form>
                         </div>
@@ -130,7 +130,7 @@
             class="rounded-xl border-2 border-dashed border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 p-6">
             <flux:heading size="lg" class="mb-4">
                 <flux:icon name="plus-circle" class="w-5 h-5 inline mr-2 text-blue-500" />
-                Adicionar nova sessão
+                Add new Session
             </flux:heading>
 
             @if ($errors->any())
@@ -149,45 +149,44 @@
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     <div>
-                        <flux:label for="name">Nome da sessão</flux:label>
+                        <flux:label for="name">Session Name</flux:label>
                         <flux:input id="name" name="name" type="text"
                             placeholder="Ex: Conceitos Gerais (opcional)" value="{{ old('name') }}" />
                     </div>
 
                     <div>
-                        <flux:label for="type">Tipo de questões</flux:label>
+                        <flux:label for="type">Question type</flux:label>
                         <flux:select id="type" name="type">
-                            <option value="open" {{ old('type') === 'open' ? 'selected' : '' }}>Questões abertas
+                            <option value="open" {{ old('type') === 'open' ? 'selected' : '' }}>Open questions
                             </option>
                             <option value="multiple_choice" {{ old('type') === 'multiple_choice' ? 'selected' : '' }}>
-                                Múltipla escolha</option>
+                                Multiple choice</option>
                         </flux:select>
                     </div>
 
                     <div>
-                        <flux:label for="source">Fonte</flux:label>
+                        <flux:label for="source">Source</flux:label>
                         <flux:select id="source" name="source" onchange="toggleSource(this.value)">
-                            <option value="ai" {{ old('source') === 'ai' ? 'selected' : '' }}>Gerar com IA</option>
-                            <option value="manual" {{ old('source') === 'manual' ? 'selected' : '' }}>Inserir
-                                manualmente
+                            <option value="ai" {{ old('source') === 'ai' ? 'selected' : '' }}>Generate with AI</option>
+                            <option value="manual" {{ old('source') === 'manual' ? 'selected' : '' }}>Insert manually
                             </option>
                         </flux:select>
                     </div>
 
                     <div>
-                        <flux:label for="num_questions">Nº de questões</flux:label>
+                        <flux:label for="num_questions">Number of questions</flux:label>
                         <flux:input id="num_questions" name="num_questions" type="number" placeholder="5"
                             min="1" max="50" value="{{ old('num_questions') }}" required />
                     </div>
 
                     <div>
-                        <flux:label for="points">Valor por questão</flux:label>
+                        <flux:label for="points">Points for question</flux:label>
                         <flux:input id="points" name="points" type="number" placeholder="10" min="0.5"
                             step="0.5" value="{{ old('points') }}" required />
                     </div>
 
                     <div>
-                        <flux:label for="difficulty">Nível de dificuldade</flux:label>
+                        <flux:label for="difficulty">Difficulty level</flux:label>
                         <flux:select id="difficulty" name="difficulty">
                             <option value="easy" {{ old('difficulty') === 'easy' ? 'selected' : '' }}>Fácil</option>
                             <option value="medium" {{ old('difficulty') === 'medium' ? 'selected' : '' }}>Médio
@@ -198,28 +197,28 @@
                     </div>
                 </div>
 
-                {{-- Escopo (só para IA) --}}
+                {{-- Scope / content --}}
                 <div id="ai-fields" class="mt-4">
-                    <flux:label for="scope">Escopo / conteúdo</flux:label>
+                    <flux:label for="scope">Scope / content</flux:label>
                     <flux:textarea id="scope" name="scope" rows="3"
-                        placeholder="Ex: História da TI focando-se nas datas e eventos marcantes. Tudo abordado na unidade 2.3.">
+                        placeholder="Example: History of IT focusing on key dates and events. All discussed in unit 2.3.">
                         {{ old('scope') }}</flux:textarea>
                 </div>
 
-                {{-- Questões manuais --}}
+                {{-- Manual questions --}}
                 <div id="manual-fields" class="mt-4 hidden">
-                    <flux:heading size="sm" class="mb-3">Questões manuais</flux:heading>
+                    <flux:heading size="sm" class="mb-3">Manual questions</flux:heading>
                     <div id="manual-questions-container" class="space-y-4"></div>
                     <flux:button type="button" variant="ghost" size="sm" class="mt-3"
                         onclick="addManualQuestion()">
-                        + Adicionar questão
+                        + Add question
                     </flux:button>
                 </div>
 
                 <div class="mt-6 flex justify-end">
                     <flux:button type="submit" variant="primary">
                         <flux:icon name="plus" class="w-4 h-4 mr-1" />
-                        Adicionar sessão
+                        Add Session
                     </flux:button>
                 </div>
             </form>
@@ -252,20 +251,20 @@
         div.className = 'rounded-lg border border-zinc-200 dark:border-zinc-700 p-4 space-y-3';
         div.innerHTML = `
                 <div>
-                    <label class="text-sm text-zinc-500 block mb-1">Questão ${index + 1}</label>
+                    <label class="text-sm text-zinc-500 block mb-1">Question ${index + 1}</label>
                     <textarea name="questions[${index}][content]" rows="2" required
                         class="w-full rounded-lg border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm px-3 py-2"
-                        placeholder="Escreve o enunciado da questão..."></textarea>
+                        placeholder="Write the statement of the question...."></textarea>
                 </div>
                 <div>
-                    <label class="text-sm text-zinc-500 block mb-1">Resposta esperada</label>
+                    <label class="text-sm text-zinc-500 block mb-1">Expected answer</label>
                     <textarea name="questions[${index}][answer]" rows="2" required
                         class="w-full rounded-lg border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm px-3 py-2"
-                        placeholder="Escreve a resposta esperada..."></textarea>
+                        placeholder="write the expected answer..."></textarea>
                 </div>
                 ${type === 'multiple_choice' ? `
                 <div>
-                    <label class="text-sm text-zinc-500 block mb-1">Opções (marca a correta)</label>
+                    <label class="text-sm text-zinc-500 block mb-1">Options (mark the correct one)</label>
                     ${[0,1,2,3].map(i => `
                         <div class="flex items-center gap-2 mb-1">
                             <input type="radio" name="questions[${index}][correct]" value="${i}" ${i === 0 ? 'checked' : ''}>

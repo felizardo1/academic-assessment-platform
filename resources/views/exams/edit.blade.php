@@ -1,8 +1,8 @@
-<x-layouts::app.sidebar title="Editar Exame">
+<x-layouts::app.sidebar title="Edit Exam">
     <flux:main>
         <div class="mb-6">
-            <flux:heading size="xl">Editar exame</flux:heading>
-            <flux:text class="mt-1 text-zinc-500">Atualiza os dados gerais do exame.</flux:text>
+            <flux:heading size="xl">Edit Exam</flux:heading>
+            <flux:text class="mt-1 text-zinc-500">Update the general exam data.</flux:text>
         </div>
 
         @if ($errors->any())
@@ -23,37 +23,37 @@
 
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <div>
-                        <flux:label for="title">Título do exame</flux:label>
+                        <flux:label for="title">Exam Title</flux:label>
                         <flux:input id="title" name="title" type="text"
                             value="{{ old('title', $exam->title) }}" required />
                     </div>
 
                     <div>
-                        <flux:label for="institution">Instituição</flux:label>
+                        <flux:label for="institution">Institution</flux:label>
                         <flux:input id="institution" name="institution" type="text"
                             value="{{ old('institution', $exam->institution) }}" required />
                     </div>
 
                     <div>
-                        <flux:label for="subject">Disciplina</flux:label>
+                        <flux:label for="subject">Discipline</flux:label>
                         <flux:input id="subject" name="subject" type="text"
                             value="{{ old('subject', $exam->subject) }}" required />
                     </div>
 
                     <div>
-                        <flux:label for="date">Data do exame</flux:label>
+                        <flux:label for="date">Exam date</flux:label>
                         <flux:input id="date" name="date" type="date" value="{{ old('date', $exam->date) }}"
                             required />
                     </div>
 
                     <div>
-                        <flux:label for="duration">Duração (minutos)</flux:label>
+                        <flux:label for="duration">Duration (minutes)</flux:label>
                         <flux:input id="duration" name="duration" type="number"
                             value="{{ old('duration', $exam->duration) }}" min="1" required />
                     </div>
 
                     <div>
-                        <flux:label for="total_points">Nota total</flux:label>
+                        <flux:label for="total_points">Total score</flux:label>
                         <flux:input id="total_points" name="total_points" type="number"
                             value="{{ old('total_points', $exam->total_points) }}" min="1" step="0.5"
                             required />
@@ -62,10 +62,10 @@
 
                 <div class="mt-6 flex justify-end gap-3">
                     <flux:button href="{{ route('exams.show', $exam) }}" variant="ghost" wire:navigate>
-                        Cancelar
+                        Cancel
                     </flux:button>
                     <flux:button type="submit" variant="primary">
-                        Guardar alterações
+                        Save changes
                     </flux:button>
                 </div>
             </form>
