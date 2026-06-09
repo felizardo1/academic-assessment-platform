@@ -89,20 +89,21 @@
     <div class="header">
         <h1>{{ $exam->institution }}</h1>
         <p><strong>{{ $exam->title }}</strong></p>
-        <p>Disciplina: {{ $exam->subject }} | Data: {{ \Carbon\Carbon::parse($exam->date)->format('d/m/Y') }} | Duração:
+        <p>Discipline: {{ $exam->subject }} | Date: {{ \Carbon\Carbon::parse($exam->date)->format('d/m/Y') }} |
+            Duration:
             {{ $exam->duration }} minutos</p>
-        <p>Nota Total: {{ $exam->total_points }} pontos</p>
+        <p>Total Points: {{ $exam->total_points }} points</p>
     </div>
 
     @foreach ($exam->sections as $index => $section)
         <div class="section">
             @if ($section->name)
                 <div class="section-title">
-                    Secção {{ $index + 1 }} — {{ $section->name }}
+                    Session {{ $index + 1 }} — {{ $section->name }}
                 </div>
             @else
                 <div class="section-title">
-                    Secção {{ $index + 1 }}
+                    Session {{ $index + 1 }}
                 </div>
             @endif
 

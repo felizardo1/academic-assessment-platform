@@ -128,21 +128,22 @@
 
     <div class="header">
         <h1>{{ $exam->institution }}</h1>
-        <p><strong>{{ $exam->title }}</strong> — <span class="badge">GUIA DE CORREÇÃO</span></p>
-        <p>Disciplina: {{ $exam->subject }} | Data: {{ \Carbon\Carbon::parse($exam->date)->format('d/m/Y') }} | Duração:
-            {{ $exam->duration }} minutos</p>
-        <p>Nota Total: {{ $exam->total_points }} pontos</p>
+        <p><strong>{{ $exam->title }}</strong> — <span class="badge">CORRECTION GUIDE</span></p>
+        <p>Discipline: {{ $exam->subject }} | Data: {{ \Carbon\Carbon::parse($exam->date)->format('d/m/Y') }} |
+            Duration:
+            {{ $exam->duration }} Minutes</p>
+        <p>Total: {{ $exam->total_points }} points</p>
     </div>
 
     @foreach ($exam->sections as $index => $section)
         <div class="section">
             @if ($section->name)
                 <div class="section-title">
-                    Secção {{ $index + 1 }} — {{ $section->name }}
+                    Session {{ $index + 1 }} — {{ $section->name }}
                 </div>
             @else
                 <div class="section-title">
-                    Secção {{ $index + 1 }}
+                    Session {{ $index + 1 }}
                 </div>
             @endif
 
@@ -168,13 +169,13 @@
 
                     @if ($question->answerKey)
                         <div class="answer-box">
-                            <div class="answer-label">RESPOSTA ESPERADA:</div>
+                            <div class="answer-label">EXPECTED ANSWER:</div>
                             {{ $question->answerKey->expected_answer }}
                         </div>
 
                         @if ($question->answerKey->correction_criteria)
                             <div class="criteria-box">
-                                <div class="criteria-label">CRITÉRIOS DE AVALIAÇÃO:</div>
+                                <div class="criteria-label">EVALUATION CRITERIA:</div>
                                 {{ $question->answerKey->correction_criteria }}
                             </div>
                         @endif
@@ -185,7 +186,7 @@
     @endforeach
 
     <div class="footer">
-        {{ $exam->institution }} — {{ $exam->title }} — GUIA DE CORREÇÃO —
+        {{ $exam->institution }} — {{ $exam->title }} — CORRECTION GUIDE —
         {{ \Carbon\Carbon::parse($exam->date)->format('d/m/Y') }}
     </div>
 

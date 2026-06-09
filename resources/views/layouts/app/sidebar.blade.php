@@ -14,7 +14,7 @@
         </flux:sidebar.header>
 
         <flux:sidebar.nav>
-            <flux:sidebar.group :heading="__('Avaliações')" class="grid">
+            <flux:sidebar.group :heading="__('Exams')" class="grid">
                 <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>
                     {{ __('Dashboard') }}
@@ -22,20 +22,20 @@
 
                 <flux:sidebar.item icon="document-text" :href="route('exams.index')"
                     :current="request()->routeIs('exams.*')" wire:navigate>
-                    {{ __('Os meus exames') }}
+                    {{ __('My exams') }}
                 </flux:sidebar.item>
 
                 <flux:sidebar.item icon="plus-circle" :href="route('exams.create')"
                     :current="request()->routeIs('exams.create')" wire:navigate>
-                    {{ __('Novo exame') }}
+                    {{ __('New Exam') }}
                 </flux:sidebar.item>
             </flux:sidebar.group>
 
             @if (auth()->user()->isAdmin())
-                <flux:sidebar.group :heading="__('Administração')" class="grid">
+                <flux:sidebar.group :heading="__('Administration')" class="grid">
                     <flux:sidebar.item icon="users" :href="route('admin.users.index')"
                         :current="request()->routeIs('admin.users.*')" wire:navigate>
-                        {{ __('Gerir docentes') }}
+                        {{ __('Manage teachers') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             @endif

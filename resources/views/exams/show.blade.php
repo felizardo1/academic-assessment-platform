@@ -167,7 +167,8 @@
                     <div>
                         <flux:label for="source">Source</flux:label>
                         <flux:select id="source" name="source" onchange="toggleSource(this.value)">
-                            <option value="ai" {{ old('source') === 'ai' ? 'selected' : '' }}>Generate with AI</option>
+                            <option value="ai" {{ old('source') === 'ai' ? 'selected' : '' }}>Generate with AI
+                            </option>
                             <option value="manual" {{ old('source') === 'manual' ? 'selected' : '' }}>Insert manually
                             </option>
                         </flux:select>

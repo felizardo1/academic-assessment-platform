@@ -1,36 +1,38 @@
 <x-layouts::app.sidebar :title="__('Dashboard')">
     <flux:main>
         <div class="mb-6">
-            <flux:heading size="xl">Bem-vindo, {{ auth()->user()->name }}!</flux:heading>
-            <flux:text class="mt-1 text-zinc-500">Aqui está um resumo da tua atividade.</flux:text>
+            <flux:heading size="xl">Welcome, {{ auth()->user()->name }}!</flux:heading>
+            <flux:text class="mt-1 text-zinc-500">Here is a summary of your activity.</flux:text>
         </div>
 
+
+
         {{-- Stats --}}
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-8">
-            <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5">
-                <flux:text class="text-sm text-zinc-500">Total de exames</flux:text>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3 mb-8 w-full ">
+            <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4">
+                <flux:text class="text-sm text-zinc-500">Total number of exams</flux:text>
                 <div class="mt-1 text-3xl font-semibold text-blue-600">{{ auth()->user()->exams()->count() }}</div>
             </div>
-            <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5">
-                <flux:text class="text-sm text-zinc-500">Questões geradas</flux:text>
+            <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4">
+                <flux:text class="text-sm text-zinc-500">Questions generated</flux:text>
                 <div class="mt-1 text-3xl font-semibold text-green-600">
                     {{ auth()->user()->exams()->with('sections.questions')->get()->sum(fn($e) => $e->sections->sum(fn($s) => $s->questions->count())) }}
                 </div>
             </div>
-            <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5">
-                <flux:text class="text-sm text-zinc-500">Exames este mês</flux:text>
+            <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4">
+                <flux:text class="text-sm text-zinc-500">Exams this month</flux:text>
                 <div class="mt-1 text-3xl font-semibold text-amber-600">
                     {{ auth()->user()->exams()->whereMonth('created_at', now()->month)->count() }}
                 </div>
             </div>
         </div>
 
-        {{-- Exames Recentes --}}
+        {{-- Recent exams --}}
         <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
             <div class="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-700">
-                <flux:heading size="lg">Exames recentes</flux:heading>
+                <flux:heading size="lg">Recent exams</flux:heading>
                 <flux:button href="{{ route('exams.create') }}" variant="primary" size="sm" wire:navigate>
-                    + Novo exame
+                    + New exam
                 </flux:button>
             </div>
 
@@ -38,10 +40,10 @@
 
             @if ($exams->isEmpty())
                 <div class="px-5 py-10 text-center">
-                    <flux:text class="text-zinc-400">Ainda não criaste nenhum exame.</flux:text>
+                    <flux:text class="text-zinc-400">You haven't created any exams yet.</flux:text>
                     <div class="mt-3">
                         <flux:button href="{{ route('exams.create') }}" variant="primary" wire:navigate>
-                            Criar primeiro exame
+                            Create first exam
                         </flux:button>
                     </div>
                 </div>
@@ -62,7 +64,7 @@
                                     {{ $exam->total_points }} pts</div>
                             </div>
                             <div class="flex gap-2">
-                                <flux:button href="{{ route('exams.show', $exam) }}" size="sm" wire:navigate>Ver
+                                <flux:button href="{{ route('exams.show', $exam) }}" size="sm" wire:navigate>See
                                 </flux:button>
                                 <flux:button href="{{ route('exams.download.exam', $exam) }}" size="sm"
                                     variant="ghost">PDF</flux:button>

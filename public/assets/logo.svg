@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 320 80" height="80" width="320">
+  
+  
+
+  
+  <rect fill="#1E40AF" rx="12" height="56" width="56" y="12" x="8"></rect>
+  
+  
+  <rect stroke-width="3" stroke="#E2E8F0" fill="#F1F5F9" rx="3" height="46" width="36" y="22" x="18"></rect>
+  <rect fill="#1E40AF" rx="1" height="3" width="24" y="29" x="24"></rect>
+  <rect fill="#1E40AF" rx="1" height="3" width="24" y="37" x="24"></rect>
+  <rect fill="#1E40AF" rx="1" height="3" width="18" y="45" x="24"></rect>
+  
+  
+  <circle fill="#F1F5F9" r="10" cy="56" cx="49"></circle>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#1E40AF" fill="none" d="M44 56 L47.5 60 L55 49"></path>
+  
+  
+  <text fill="#F1F5F9" font-weight="700" font-size="42" font-family="Arial Black, sans-serif" y="52" x="78">Exam</text>
+  <text fill="#60A5FA" font-weight="700" font-size="42" font-family="Arial Black, sans-serif" y="52" x="200">Gen</text>
+</svg>
