@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Services\DeepSeekService;
 use Illuminate\Support\Facades\Http;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DeepSeekServiceTest extends TestCase
@@ -20,7 +21,7 @@ class DeepSeekServiceTest extends TestCase
     // buildPrompt
     // -------------------------------------------------------------------------
 
-    /** @test */
+    #[Test]
     public function build_prompt_includes_chunk_when_provided(): void
     {
         $config = $this->baseConfig();
@@ -32,7 +33,7 @@ class DeepSeekServiceTest extends TestCase
         $this->assertStringContainsString('Com base no seguinte conteúdo académico', $prompt);
     }
 
-    /** @test */
+    #[Test]
     public function build_prompt_excludes_context_when_chunk_is_empty(): void
     {
         $config = $this->baseConfig();
@@ -42,7 +43,7 @@ class DeepSeekServiceTest extends TestCase
         $this->assertStringNotContainsString('Com base no seguinte conteúdo académico', $prompt);
     }
 
-    /** @test */
+    #[Test]
     public function build_prompt_includes_multiple_choice_label_for_correct_type(): void
     {
         $config         = $this->baseConfig();
@@ -53,7 +54,7 @@ class DeepSeekServiceTest extends TestCase
         $this->assertStringContainsString('escolha múltipla', $prompt);
     }
 
-    /** @test */
+    #[Test]
     public function build_prompt_includes_open_label_for_open_type(): void
     {
         $config         = $this->baseConfig();
@@ -64,7 +65,7 @@ class DeepSeekServiceTest extends TestCase
         $this->assertStringContainsString('abertas', $prompt);
     }
 
-    /** @test */
+    #[Test]
     public function build_prompt_includes_difficulty_and_scope(): void
     {
         $config = $this->baseConfig();
@@ -79,7 +80,7 @@ class DeepSeekServiceTest extends TestCase
     // parseResponse
     // -------------------------------------------------------------------------
 
-    /** @test */
+    #[Test]
     public function parse_response_returns_valid_array_from_clean_json(): void
     {
         $json = json_encode(['questions' => [['question_number' => 1, 'question_text' => 'Teste']]]);
@@ -91,7 +92,7 @@ class DeepSeekServiceTest extends TestCase
         $this->assertCount(1, $result['questions']);
     }
 
-    /** @test */
+    #[Test]
     public function parse_response_strips_markdown_backticks_before_parsing(): void
     {
         $json    = json_encode(['questions' => [['question_number' => 1]]]);
@@ -102,7 +103,7 @@ class DeepSeekServiceTest extends TestCase
         $this->assertArrayHasKey('questions', $result);
     }
 
-    /** @test */
+    #[Test]
     public function parse_response_returns_empty_questions_array_for_invalid_json(): void
     {
         $result = $this->service->parseResponse('isto não é json válido');
@@ -110,7 +111,7 @@ class DeepSeekServiceTest extends TestCase
         $this->assertEquals(['questions' => []], $result);
     }
 
-    /** @test */
+    #[Test]
     public function parse_response_returns_empty_questions_array_for_empty_string(): void
     {
         $result = $this->service->parseResponse('');
@@ -122,7 +123,7 @@ class DeepSeekServiceTest extends TestCase
     // generateQuestions (com mock HTTP)
     // -------------------------------------------------------------------------
 
-    /** @test */
+    #[Test]
     public function generate_questions_returns_parsed_questions_on_successful_api_response(): void
     {
         $fakeQuestions = [
@@ -153,7 +154,7 @@ class DeepSeekServiceTest extends TestCase
         $this->assertEquals('O que é um LLM?', $result['questions'][0]['question_text']);
     }
 
-    /** @test */
+    #[Test]
     public function generate_questions_returns_empty_array_when_api_returns_invalid_json(): void
     {
         Http::fake([

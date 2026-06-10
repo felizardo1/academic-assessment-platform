@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use App\Models\Exam;
 use App\Services\PdfGeneratorService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PdfGeneratorServiceTest extends TestCase
@@ -15,97 +15,68 @@ class PdfGeneratorServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Storage::fake();
+        $this->bindFakePdf();
         $this->service = new PdfGeneratorService();
     }
 
-    // -------------------------------------------------------------------------
-    // generateExam
-    // -------------------------------------------------------------------------
-
-    /** @test */
+    #[Test]
     public function generate_exam_returns_correct_storage_path(): void
     {
-        Storage::fake();
-        $this->mockPdf();
-
         $exam = $this->fakeExam();
-
         $path = $this->service->generateExam($exam);
 
         $this->assertEquals("exams/exam_{$exam->id}.pdf", $path);
     }
 
-    /** @test */
+    #[Test]
     public function generate_exam_stores_file_in_storage(): void
     {
-        Storage::fake();
-        $this->mockPdf();
-
         $exam = $this->fakeExam();
-
         $path = $this->service->generateExam($exam);
 
         Storage::assertExists($path);
     }
 
-    /** @test */
+    #[Test]
     public function generate_exam_stores_file_inside_exams_directory(): void
     {
-        Storage::fake();
-        $this->mockPdf();
-
         $exam = $this->fakeExam();
         $path = $this->service->generateExam($exam);
 
         $this->assertStringStartsWith('exams/', $path);
     }
 
-    // -------------------------------------------------------------------------
-    // generateCorrectionGuide
-    // -------------------------------------------------------------------------
-
-    /** @test */
+    #[Test]
     public function generate_correction_guide_returns_correct_storage_path(): void
     {
-        Storage::fake();
-        $this->mockPdf();
-
         $exam = $this->fakeExam();
         $path = $this->service->generateCorrectionGuide($exam);
 
         $this->assertEquals("exams/correction_{$exam->id}.pdf", $path);
     }
 
-    /** @test */
+    #[Test]
     public function generate_correction_guide_stores_file_in_storage(): void
     {
-        Storage::fake();
-        $this->mockPdf();
-
         $exam = $this->fakeExam();
         $path = $this->service->generateCorrectionGuide($exam);
 
         Storage::assertExists($path);
     }
 
-    /** @test */
+    #[Test]
     public function generate_correction_guide_stores_file_inside_exams_directory(): void
     {
-        Storage::fake();
-        $this->mockPdf();
-
         $exam = $this->fakeExam();
         $path = $this->service->generateCorrectionGuide($exam);
 
         $this->assertStringStartsWith('exams/', $path);
     }
 
-    /** @test */
+    #[Test]
     public function exam_and_correction_guide_are_stored_with_different_filenames(): void
     {
-        Storage::fake();
-        $this->mockPdf();
-
         $exam      = $this->fakeExam();
         $examPath  = $this->service->generateExam($exam);
         $guidePath = $this->service->generateCorrectionGuide($exam);
@@ -113,27 +84,28 @@ class PdfGeneratorServiceTest extends TestCase
         $this->assertNotEquals($examPath, $guidePath);
     }
 
-    // -------------------------------------------------------------------------
-    // Helpers
-    // -------------------------------------------------------------------------
-
     private function fakeExam(): Exam
     {
-        $exam = $this->createMock(Exam::class);
-
+        $exam     = $this->createMock(Exam::class);
         $exam->id = 42;
-
-        // load() não deve lançar erro durante os testes
         $exam->method('load')->willReturnSelf();
 
         return $exam;
     }
 
-    private function mockPdf(): void
+    private function bindFakePdf(): void
     {
-        $pdfMock = \Mockery::mock('overload:' . \Barryvdh\DomPDF\PDF::class);
-        $pdfMock->shouldReceive('output')->andReturn('%PDF fake content');
+        $fakePdf = new class {
+            public function loadView(string $view, array $data = []): static
+            {
+                return $this;
+            }
+            public function output(): string
+            {
+                return '%PDF-fake-content';
+            }
+        };
 
-        Pdf::shouldReceive('loadView')->andReturn($pdfMock);
+        \Barryvdh\DomPDF\Facade\Pdf::swap($fakePdf);
     }
 }

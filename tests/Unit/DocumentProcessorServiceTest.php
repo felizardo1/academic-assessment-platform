@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Services\DocumentProcessorService;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DocumentProcessorServiceTest extends TestCase
@@ -21,7 +22,7 @@ class DocumentProcessorServiceTest extends TestCase
     // extract — TXT
     // -------------------------------------------------------------------------
 
-    /** @test */
+    #[Test]
     public function extract_returns_content_from_txt_file(): void
     {
         $path = $this->tempDir . '/test_extract.txt';
@@ -34,7 +35,7 @@ class DocumentProcessorServiceTest extends TestCase
         unlink($path);
     }
 
-    /** @test */
+    #[Test]
     public function extract_is_case_insensitive_for_file_type(): void
     {
         $path = $this->tempDir . '/test_case.txt';
@@ -47,7 +48,7 @@ class DocumentProcessorServiceTest extends TestCase
         unlink($path);
     }
 
-    /** @test */
+    #[Test]
     public function extract_throws_exception_for_unsupported_file_type(): void
     {
         $this->expectException(\Exception::class);
@@ -60,7 +61,7 @@ class DocumentProcessorServiceTest extends TestCase
     // chunk
     // -------------------------------------------------------------------------
 
-    /** @test */
+    #[Test]
     public function chunk_returns_single_chunk_for_short_text(): void
     {
         $text   = 'Este é um texto curto.';
@@ -70,17 +71,16 @@ class DocumentProcessorServiceTest extends TestCase
         $this->assertEquals($text, $chunks[0]);
     }
 
-    /** @test */
+    #[Test]
     public function chunk_splits_long_text_into_multiple_chunks(): void
     {
-        // Gera texto com mais de 3000 caracteres
         $text   = implode(' ', array_fill(0, 600, 'palavra'));
         $chunks = $this->service->chunk($text);
 
         $this->assertGreaterThan(1, count($chunks));
     }
 
-    /** @test */
+    #[Test]
     public function chunk_respects_maximum_chunk_size(): void
     {
         $text   = implode(' ', array_fill(0, 600, 'palavra'));
@@ -91,20 +91,19 @@ class DocumentProcessorServiceTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function chunk_does_not_truncate_words_between_chunks(): void
     {
         $text   = implode(' ', array_fill(0, 600, 'palavra'));
         $chunks = $this->service->chunk($text);
 
         foreach ($chunks as $chunk) {
-            // Cada chunk deve começar e terminar com uma palavra completa
             $this->assertMatchesRegularExpression('/^\S/', $chunk);
             $this->assertMatchesRegularExpression('/\S$/', $chunk);
         }
     }
 
-    /** @test */
+    #[Test]
     public function chunk_normalises_multiple_spaces_in_text(): void
     {
         $text   = 'Palavra1   Palavra2     Palavra3';
@@ -113,7 +112,7 @@ class DocumentProcessorServiceTest extends TestCase
         $this->assertStringNotContainsString('  ', $chunks[0]);
     }
 
-    /** @test */
+    #[Test]
     public function chunk_returns_empty_array_for_empty_string(): void
     {
         $chunks = $this->service->chunk('');
@@ -122,7 +121,7 @@ class DocumentProcessorServiceTest extends TestCase
         $this->assertCount(0, $chunks);
     }
 
-    /** @test */
+    #[Test]
     public function chunk_trims_whitespace_from_each_chunk(): void
     {
         $text   = implode(' ', array_fill(0, 600, 'palavra'));
@@ -137,7 +136,7 @@ class DocumentProcessorServiceTest extends TestCase
     // extractAndChunk
     // -------------------------------------------------------------------------
 
-    /** @test */
+    #[Test]
     public function extract_and_chunk_returns_array_of_chunks_from_txt(): void
     {
         $content = implode(' ', array_fill(0, 600, 'palavra'));
@@ -152,7 +151,7 @@ class DocumentProcessorServiceTest extends TestCase
         unlink($path);
     }
 
-    /** @test */
+    #[Test]
     public function extract_and_chunk_returns_single_chunk_for_short_txt(): void
     {
         $path = $this->tempDir . '/test_short.txt';
