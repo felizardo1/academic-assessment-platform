@@ -14,6 +14,7 @@
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
+- [Creating a Test Account](#creating-a-test-account)
 - [Project Structure](#project-structure)
 - [Testing](#testing)
 - [Academic Context](#academic-context)
@@ -169,13 +170,12 @@ DEEPSEEK_API_KEY=your_deepseek_api_key_here
 DEEPSEEK_API_URL=https://api.deepseek.com/v1/chat/completions
 ```
 
-> ⚠️ **Never commit your `.env` file to version control.** It contains sensitive credentials including your DeepSeek API key.
 
 ---
 
 ## Usage
 
-To run the application locally, two terminals must be open simultaneously.
+To run the application locally, open two terminals simultaneously.
 
 **Terminal 1 — Laravel development server:**
 ```bash
@@ -195,7 +195,7 @@ http://localhost:8000
 
 ### Generating an exam
 
-1. Register or log in as an educator
+1. Log in with the test account (see below)
 2. Create a new **Exam Session** and configure parameters:
    - Question type: `multiple_choice` or `open`
    - Difficulty: `easy`, `medium`, or `hard`
@@ -208,11 +208,33 @@ http://localhost:8000
 
 ---
 
+## Creating a Test Account
+
+Run the following command to create a teacher account ready for evaluation:
+
+```bash
+php artisan app:create-test-user
+```
+
+This will create an account with the following credentials:
+
+| Field | Value |
+|-------|-------|
+| Email | teacher@assessment.com |
+| Password | teacher123 |
+
+> If the account already exists the command will skip creation and display the credentials.
+
+---
+
 ## Project Structure
 
 ```
 academic-assessment-platform/
 ├── app/
+│   ├── Console/
+│   │   └── Commands/
+│   │       └── CreateTestUser.php          # Artisan command to create test account
 │   ├── Http/
 │   │   └── Controllers/
 │   │       └── ExamController.php          # Exam CRUD and generation
