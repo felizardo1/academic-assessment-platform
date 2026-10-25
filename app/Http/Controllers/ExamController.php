@@ -50,7 +50,7 @@ class ExamController extends Controller
         }
 
         return redirect()->route('exams.show', $exam)
-            ->with('success', 'Exame criado com sucesso! Agora adiciona as sessões.');
+            ->with('success', 'Exam created successfully! Now you can add the sessions.');
     }
 
     public function show(Exam $exam)
@@ -82,7 +82,7 @@ class ExamController extends Controller
         $exam->update($validated);
 
         return redirect()->route('exams.show', $exam)
-            ->with('success', 'Exame atualizado com sucesso!');
+            ->with('success', 'Exam successfully updated!');
     }
 
     public function destroy(Exam $exam)
@@ -91,6 +91,6 @@ class ExamController extends Controller
         $exam->delete();
 
         return redirect()->route('exams.index')
-            ->with('success', 'Exame eliminado com sucesso!');
+            ->with('success', 'Exam successfully completed!');
     }
 }

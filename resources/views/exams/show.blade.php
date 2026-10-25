@@ -88,11 +88,11 @@
                                                     @elseif($question->difficulty === 'medium') bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300
                                                     @else bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300 @endif">
                                                     @if ($question->difficulty === 'easy')
-                                                        Fácil
+                                                        Easy
                                                     @elseif($question->difficulty === 'medium')
-                                                        Médio
+                                                        Medium
                                                     @else
-                                                        Difícil
+                                                        Hard
                                                     @endif
                                                 </span>
                                                 <span
@@ -151,7 +151,7 @@
                     <div>
                         <flux:label for="name">Session Name</flux:label>
                         <flux:input id="name" name="name" type="text"
-                            placeholder="Ex: Conceitos Gerais (opcional)" value="{{ old('name') }}" />
+                            placeholder="Ex: General Concepts (optional)" value="{{ old('name') }}" />
                     </div>
 
                     <div>
@@ -189,10 +189,10 @@
                     <div>
                         <flux:label for="difficulty">Difficulty level</flux:label>
                         <flux:select id="difficulty" name="difficulty">
-                            <option value="easy" {{ old('difficulty') === 'easy' ? 'selected' : '' }}>Fácil</option>
-                            <option value="medium" {{ old('difficulty') === 'medium' ? 'selected' : '' }}>Médio
+                            <option value="easy" {{ old('difficulty') === 'easy' ? 'selected' : '' }}>Easy</option>
+                            <option value="medium" {{ old('difficulty') === 'medium' ? 'selected' : '' }}>Medium
                             </option>
-                            <option value="hard" {{ old('difficulty') === 'hard' ? 'selected' : '' }}>Difícil
+                            <option value="hard" {{ old('difficulty') === 'hard' ? 'selected' : '' }}>Hard
                             </option>
                         </flux:select>
                     </div>
@@ -271,7 +271,7 @@
                             <input type="radio" name="questions[${index}][correct]" value="${i}" ${i === 0 ? 'checked' : ''}>
                             <input type="text" name="questions[${index}][options][${i}][option_value]" required
                                 class="flex-1 rounded border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm px-2 py-1"
-                                placeholder="Opção ${String.fromCharCode(65+i)}">
+                                placeholder="Option ${String.fromCharCode(65+i)}">
                             <input type="hidden" name="questions[${index}][options][${i}][option_is_correct]" value="0">
                         </div>
                     `).join('')}

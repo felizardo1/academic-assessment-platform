@@ -17,7 +17,7 @@ class PdfController extends Controller
         $pdfService->generateCorrectionGuide($exam);
 
         return redirect()->route('exams.show', $exam)
-            ->with('success', 'PDFs gerados com sucesso!');
+            ->with('success', 'PDFs generated successfully.!');
     }
 
     public function downloadExam(Exam $exam)

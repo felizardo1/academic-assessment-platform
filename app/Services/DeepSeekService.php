@@ -27,7 +27,7 @@ class DeepSeekService
             'messages' => [
                 [
                     'role'    => 'system',
-                    'content' => 'És um assistente especializado em criação de avaliações académicas. Responde SEMPRE em JSON válido, sem texto adicional, sem markdown, sem backticks.',
+                    'content' => 'You are an assistant specializing in creating academic assessments. ALWAYS respond in valid JSON, without additional text, markdown, or backticks.',
                 ],
                 [
                     'role'    => 'user',
@@ -43,18 +43,18 @@ class DeepSeekService
 
     public function buildPrompt(array $config, string $chunk = ''): string
     {
-        $context = $chunk ? "Com base no seguinte conteúdo académico:\n\n{$chunk}\n\n" : '';
+        $context = $chunk ? "Based on the following content covered during class:\n\n{$chunk}\n\n" : '';
 
-        $typeLabel = $config['type'] === 'multiple_choice' ? 'escolha múltipla (com 4 opções cada)' : 'abertas';
+        $typeLabel = $config['type'] === 'multiple_choice' ? 'Multiple choice (with 4 options each)' : 'open';
 
-        return "{$context}Gera {$config['num_questions']} questões do tipo {$typeLabel},
-        com nível de dificuldade {$config['difficulty']},
-        cada questão vale {$config['points']} pontos,
-        sobre o seguinte tema: {$config['scope']}.
+        return "{$context}Generate {$config['num_questions']} questions of type {$typeLabel},
+        with difficulty level {$config['difficulty']},
+        each question is worth {$config['points']} points,
+        on the following topic: : {$config['scope']}.
 
-        Para cada questão inclui a resposta esperada e critérios de avaliação detalhados.
+        For each question, it includes the expected answer and detailed evaluation criteria.
 
-        Retorna APENAS um JSON válido com esta estrutura exata:
+        Returns ONLY a valid JSON with this exact structure:
         {
         \"questions\": [
             {

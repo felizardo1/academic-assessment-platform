@@ -45,7 +45,7 @@ class SectionController extends Controller
         }
 
         return redirect()->route('exams.show', $exam)
-            ->with('success', 'Sessão adicionada com sucesso!');
+            ->with('success', 'Session added successfully!');
     }
 
     public function destroy(Section $section)
@@ -53,7 +53,7 @@ class SectionController extends Controller
         $this->authorize('update', $section->exam);
         $section->delete();
 
-        return back()->with('success', 'Sessão eliminada com sucesso!');
+        return back()->with('success', 'Session successfully deleted!');
     }
 
     private function generateAiQuestions(Exam $exam, Section $section, array $config): void

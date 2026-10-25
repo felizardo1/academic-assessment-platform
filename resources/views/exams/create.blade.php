@@ -24,7 +24,7 @@
                     <div>
                         <flux:label for="title">Exam Title</flux:label>
                         <flux:input id="title" name="title" type="text"
-                            placeholder="Ex: Avaliação Final — Introdução à TI" value="{{ old('title') }}" required />
+                            placeholder="Ex: Final Assessment — Introduction to IT" value="{{ old('title') }}" required />
                     </div>
 
                     <div>
@@ -35,7 +35,7 @@
 
                     <div>
                         <flux:label for="subject">Discipline</flux:label>
-                        <flux:input id="subject" name="subject" type="text" placeholder="Ex: Introdução à TI"
+                        <flux:input id="subject" name="subject" type="text" placeholder="Ex: Introduction to IT"
                             value="{{ old('subject') }}" required />
                     </div>
 
